@@ -20,6 +20,22 @@ const Div = styled.div`
       display: flex;
       flex-direction: row;
     }
+    .quantity {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+      label {
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      select {
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+    }
     button {
       background-color: #f0c14b;
       border: 1px solid;
@@ -29,9 +45,16 @@ const Div = styled.div`
     }
   }
 `;
-const BasketItem = ({ id, image, title, rating, price, hideButton }) => {
+const BasketItem = ({
+  id,
+  image,
+  title,
+  rating,
+  price,
+  hideButton,
+  quantity,
+}) => {
   const [, dispatch] = useStateValue();
-
   const removeFromBasket = () => {
     //remove the item
     dispatch({
@@ -39,6 +62,7 @@ const BasketItem = ({ id, image, title, rating, price, hideButton }) => {
       id: id,
     });
   };
+
   return (
     <Div>
       <img src={image} alt="" className="image" />
@@ -54,6 +78,28 @@ const BasketItem = ({ id, image, title, rating, price, hideButton }) => {
             .map(() => (
               <p>🌟</p>
             ))}
+        </div>
+        <div className="quantity">
+          <label htmlFor="quantity">Quantity:</label>
+
+          <select>
+            {Array.from({ length: 14 }, (_, i) => (
+              <option
+                key={i + 1}
+                value={i + 1}
+                selected={quantity === i + 1}
+                onClick={(e) => {
+                  dispatch({
+                    type: "UPDATE_QUANTITY",
+                    id: id,
+                    quantity: e.target.value,
+                  });
+                }}
+              >
+                {i + 1}
+              </option>
+            ))}
+          </select>
         </div>
         {!hideButton && (
           <button onClick={removeFromBasket}>Remove from Basket</button>

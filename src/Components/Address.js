@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../StateProvider";
 import { useNavigate } from "react-router-dom";
@@ -68,11 +68,10 @@ const Div = styled.div`
 `;
 
 const Address = () => {
-    const [,dispatch]=useStateValue();
-    const navigate = useNavigate();
+  const [, dispatch] = useStateValue();
+  const navigate = useNavigate();
   // State variables to hold data
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("India");
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [addressLine1, setAddressLine1] = useState("");
@@ -81,49 +80,27 @@ const Address = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
 
-  // Fetch country data from the API
-  useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setCountries(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching country data:", error);
-      });
-  }, []);
-
   // Handle country selection
   const handleCountryChange = (event) => {
     setSelectedCountry(event.target.value);
   };
+  const mergeaddress = [addressLine1, addressLine2].join("&&");
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost/api/credentials/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        selectedCountry,
+    dispatch({
+      type: "SET_USER",
+      add: {
+        Country: selectedCountry,
         fullName,
         phoneNumber,
-        Address: [addressLine1, addressLine2],
+        Address: mergeaddress,
         city,
         state,
         zipCode,
-      }),
+      },
     });
-
-    const data = await response.json(); // Await the JSON parsing
-    if (data) {
-      dispatch({
-        type: "SET_USER",
-        user: data.results,
-      });
-    }
     navigate("/payment");
   };
 
@@ -141,14 +118,10 @@ const Address = () => {
             value={selectedCountry}
             onChange={handleCountryChange}
           >
-            <option value="" disabled>
+            <option value="" disabled selected>
               Select your country
             </option>
-            {countries.map((countryData, index) => (
-              <option key={index} value={countryData.name.common}>
-                {countryData.name.common}
-              </option>
-            ))}
+            <option value="India">India</option>
           </select>
 
           {/* Full Name */}

@@ -2,7 +2,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '88grEQg1BCyygsz-',
+  password : '.37bDjo@JYs!MwX/',
   database : 'amazon_clone'
 });
  

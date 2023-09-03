@@ -65,7 +65,7 @@ const Div = styled.div`
   }
 `;
 const Login = () => {
-  const [,dispatch]= useStateValue();
+  const [{host},dispatch]= useStateValue();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,7 +73,7 @@ const Login = () => {
   const signIn = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost/api/credentials/login", {
+    const response = await fetch(`${host}/credentials/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

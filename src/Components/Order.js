@@ -42,7 +42,6 @@ function Order({ order }) {
           image={item.image}
           price={item.price}
           rating={item.rating}
-          hideButton
         />
       ))}
       <h3>Order Total: {formattedOrderTotal}</h3>

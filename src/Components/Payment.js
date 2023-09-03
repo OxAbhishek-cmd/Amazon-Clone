@@ -49,14 +49,14 @@ const Div = styled.div`
           margin-top: 10px;
           border-color: #a88734 #9c7e31 #846a29;
           color: #111;
-          max-width:222px
+          max-width: 222px;
         }
       }
     }
   }
 `;
 const Payment = () => {
-  const [{ basket }] = useStateValue();
+  const [{ basket, address }] = useStateValue();
 
   const orderTotal = getbasketTotal(basket);
   const formattedOrderTotal = new Intl.NumberFormat("en-US", {
@@ -68,24 +68,24 @@ const Payment = () => {
     <Div>
       <div className="container">
         <h1>
-          Checkout (<Link to="checkout">{basket?.length} items</Link>)
+          Checkout (<Link to="/checkout">{basket?.length} items</Link>)
         </h1>
         {/* Payment Section - delivery address */}
         <div className="section">
           <div className="title">
             <h3>Delivery Address</h3>
           </div>
-          {/* {user?.address && (
-            <div className="address">
-              <p>{user.address}</p>
-              <p>{user.address}</p>
-              <p>{user.address}</p>
-            </div>
-          )} */}
           <div className="address">
-            <p>Address1</p>
-            <p>Address2</p>
-            <p>Address3</p>
+            <p>{address.fullName}</p>
+            <p>{address.Address[0]}</p>
+            <p>{address.Address[1]}</p>
+            <p>
+              {address.city},{address.state}
+            </p>
+            <p>
+              {address.Country},{address.zipCode}
+            </p>
+            <p>Phone : {address.phoneNumber}</p>
           </div>
         </div>
         {/* Payment Section - Review Items */}
@@ -102,6 +102,7 @@ const Payment = () => {
                 image={item.image}
                 price={item.price}
                 rating={item.rating}
+                quantity={item.quantity}
               />
             ))}
           </div>
@@ -116,7 +117,11 @@ const Payment = () => {
             <form>
               <div className="priceContainer">
                 <h3>Order Total: {formattedOrderTotal}</h3>
-                <button onClick={()=>{navigator("/order")}}>
+                <button
+                  onClick={() => {
+                    navigator("/order");
+                  }}
+                >
                   <spam>"Buy Now"</spam>
                 </button>
               </div>

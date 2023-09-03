@@ -96,8 +96,7 @@ const Header = () => {
   const handleAuthentication = () => {
     if (user) {
       dispatch({
-        type: "SET_USER",
-        user: null,
+        type: "DELETE_USER"
       });
     }
   };

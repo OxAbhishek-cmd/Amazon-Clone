@@ -61,7 +61,7 @@ const Div = styled.div`
 `;
 
 const Registration = () => {
-  const [,dispatch]= useStateValue();
+  const [{host},dispatch]= useStateValue();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -81,7 +81,7 @@ const Registration = () => {
       return;
     }
     
-    const response = await fetch("http://localhost/api/credentials/createuser", {
+    const response = await fetch(host+"/credentials/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const Registration = () => {
     if(data){
       dispatch({
         type:'SET_USER',
-        user:data.insertResults
+        user:data.insertResults.id
       })
     }
     localStorage.setItem("auth",data.authtoken)

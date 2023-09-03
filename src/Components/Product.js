@@ -48,19 +48,29 @@ const Div = styled.div`
 
 const Product = ({ id, title, image, price, rating }) => {
   const [{ basket }, dispatch] = useStateValue();
-  console.log("this is the basket >>>",basket);
   const addToBasket = () => {
-    dispatch({
-      type: "ADD_TO_BASKET",
-      item: {
-        id,
-        title,
-        image,
-        price,
-        rating,
-      },
-    });
+    const coord = basket.findIndex((basketItem) => basketItem.id === id);
+    if (coord >= 0) {
+      dispatch({
+        type: "UPDATE_QUANTITY",
+        id: id,
+        quantity: basket[coord].quantity + 1, // Corrected the syntax here
+      });
+    } else {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        item: {
+          id,
+          title,
+          image,
+          price,
+          rating,
+          quantity: 1,
+        },
+      });
+    }
   };
+  
   return (
     <Div>
       <div className="info">
