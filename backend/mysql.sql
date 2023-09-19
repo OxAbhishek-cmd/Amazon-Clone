@@ -23,6 +23,7 @@ CREATE TABLE `address` (
 CREATE TABLE `orders` (
     `order_id` INT AUTO_INCREMENT PRIMARY KEY,
     `user_id` INT NOT NULL,
+    `total` DECIMAL(10, 2) NOT NULL,
     `order_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -31,6 +32,7 @@ CREATE TABLE `order_items` (
     `order_item_id` INT AUTO_INCREMENT PRIMARY KEY,
     `order_id` INT NOT NULL,
     `product_id` INT NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
     `quantity` INT NOT NULL
 );
 
@@ -42,7 +44,7 @@ CREATE TABLE `products` (
     `price` DECIMAL(10, 2) NOT NULL,
     `rating` INT NOT NULL
 );
-Select p.product_id,p.image,p.title,p.price,p.rating,ci.quantity (SELECT product_id , quantity from cart_items where cart_id = (Select cart_id from cart where user_id = ?))
+
 -- Create the 'cart' table
 CREATE TABLE `cart` (
     `cart_id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -54,9 +56,9 @@ CREATE TABLE `cart_items` (
     `item_id` INT AUTO_INCREMENT PRIMARY KEY,
     `cart_id` INT NOT NULL,
     `product_id` INT NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
     `quantity` INT NOT NULL
 );
-
 
 -- Add foreign key constraints to 'address' table
 ALTER TABLE `address`
