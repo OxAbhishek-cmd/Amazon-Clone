@@ -24,7 +24,7 @@ To set up and run this project on your local machine, follow these general steps
 
 1. Clone the project repository.
 2. Install the necessary dependencies for both the frontend (ReactJS) and backend (Node.js Express).
-3. Set up a MySQL database using tools like XAMPP and phpMyAdmin and configure it.
+3. Set up a MySQL database using tools like MySql and configure it.
 4. Create an environment (env) file with the required variables (e.g., JWT_TOKEN, DB_NAME, DB_PASSWORD, DB_USER, PORT) for secure configuration.
 5. Start both the frontend and backend servers.
 6. Access the application in your web browser.
